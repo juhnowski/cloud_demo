@@ -7,6 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
@@ -23,29 +24,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-// @RunWith(SpringRunner.class)
-// @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+
+// @ExtendWith(SpringExtension.class)
+// @WebAppConfiguration()
 // @AutoConfigureMockMvc
-
-//@ExtendWith(MockitoExtension.class)
-
-@ExtendWith(SpringExtension.class)
-@WebAppConfiguration()
+// @SpringJUnitConfig({DemoApplication.class,CatRepository.class})
+@SpringBootTest
 @AutoConfigureMockMvc
-@SpringJUnitConfig(DemoApplication.class)
-@TestPropertySource("/application.properties")
 class DemoApplicationTests {
 
-    @Mock
-    private WebApplicationContext wac;
-
+	@Autowired
     private MockMvc mockMvc;
-
-    @BeforeEach
-    public void setup() {
-        mockMvc = MockMvcBuilders.standaloneSetup().build();
-
-    }
 
 	@Autowired
 	private CatRepository catRepository;
@@ -58,7 +47,7 @@ class DemoApplicationTests {
 
 	@Test
 	public void catsReflectedInRead() throws Exception {
-		MediaType halJson = MediaType.parseMediaType("application/hal+json;charset=UTF-8");
+		MediaType halJson = MediaType.parseMediaType("application/hal+json");
 		mockMvc
 			.perform(get("/cats"))
 			.andExpect(status().isOk())
