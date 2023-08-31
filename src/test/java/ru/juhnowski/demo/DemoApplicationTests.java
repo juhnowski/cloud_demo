@@ -8,7 +8,10 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -29,6 +32,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration()
 @AutoConfigureMockMvc
+@SpringJUnitConfig(DemoApplication.class)
+@TestPropertySource("/application.properties")
 class DemoApplicationTests {
 
     @Mock
@@ -36,7 +41,7 @@ class DemoApplicationTests {
 
     private MockMvc mockMvc;
 
-    @BeforeEach // For Junit5
+    @BeforeEach
     public void setup() {
         mockMvc = MockMvcBuilders.standaloneSetup().build();
 
