@@ -1,5 +1,7 @@
 # Demo
-Тестовое приложение
+Демо построения распределенного приложения
+
+# Этап 1 - Разработка сервиса
 
 ## Run spring boot initializer
 Dependencies:
@@ -28,3 +30,16 @@ and the returned result will be JSON:
   }
 }
 ```
+
+Этап 2 - Создание Docker образа 
+Строим образ:
+```
+docker build -t myorg/myapp .
+```
+Проверяем его работоспособность:
+```
+docker run -p 8080:8080 -e "JAVA_OPTS=-Ddebug -Xmx128m" myorg/myapp
+```
+
+Этап 3 - Паттерн Sidecar
+
